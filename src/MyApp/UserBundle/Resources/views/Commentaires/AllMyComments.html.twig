@@ -1,0 +1,374 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+{% block body %}
+    <style>
+
+        #url{
+            visibility: hidden;
+        }
+    </style>
+    <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#confirm-delete').on('show.bs.modal', function(e) {
+
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+                $('.debug-url').html('<strong id="url">' + $(this).find('.btn-ok').attr('href') + '</strong>');
+            });
+        })
+                </script>
+    <script src="{{ asset('bundles/front/js/jquery.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.replyButton', function () {
+
+                $(this).next(".commentBox").slideToggle();
+            });
+        });
+    </script>
+    <div class="dashboard_blog menu-default hover-default sidebar-left">
+        <div id="header-nav-offset"></div>
+
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap">
+            <!-- BEGIN CENTER SECTION-->
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title site__title--center">FEEDBACK</h1>
+                        </header>
+                        <!-- BEGIN LISTING-->
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+                                <h2 class="widget__title">Listes des commentaires</h2>
+                            </header>
+                            <div class="navigation text-center">
+                                {{ knp_pagination_render(commentaires) }}
+                            </div>
+                            <div class="comment">
+                                {% set size =com | length %}
+                                <h3 class="comment__headline">Comments ({{ size }})</h3>
+                                <div class="comment__wrap">
+                                    <ul class="comment__list">
+
+                                        <li class="comment__item">
+                                            {% for commentaire in commentaires %}
+                                                <div class="comment__item-body js-comment-item">
+                                                    <span class="comment__author">{{ commentaire.idUser.username }}
+                                                        * {{ commentaire.idUser.usernameCanonical }}</span>
+                                                    <div class="roundedImage"><img
+                                                                src="{{ asset('bundles/front/img/'~commentaire.idUser.photo ) }} "
+                                                                style="overflow:hidden;
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;
+    width:90px;
+    height:90px;"/></div>
+                                                    <div class="comment__item-right">
+                                                        <a href="{{ path('commentaire_edit',{'id':commentaire.id}) }}">     <button class="comment__item-btn">Edit</button></a>
+                                                        <a href="{{ path('commentaire_delete',{'id':commentaire.id}) }}"> <button class="comment__item-btn" data-toggle="modal" data-target="#confirm-delete">Delete</button></a>
+                                                    </div>
+                                                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                                                </div>
+
+                                                                <div class="modal-body">
+                                                                    <p>You are about to delete one track, this procedure is irreversible.</p>
+                                                                    <p>Do you want to proceed?</p>
+                                                                    <p class="debug-url"></p>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                    <a class="btn btn-danger btn-ok">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment__info">
+
+                                                        <span class="comment__date">   <div>  <time
+                                                                        datetime="2009-08-29" class="article">
+                                                            <strong>{{ commentaire.dateFeedback|date('M') }}
+                                                                --{{ commentaire.dateFeedback|date('Y') }}
+                                                                --{{ commentaire.dateFeedback|date('d') }}
+                                                                                             </strong></time></div></span>
+                                                        <div class="comment__content">
+                                                            <p> {{ commentaire.commentaire|raw }}</p>
+                                                        </div>
+
+                                                        <button class="replyButton form__submit">Reply</button>
+
+
+                                                        <div class="comment__form js-form-comment-wrap commentBox"
+                                                             style="display: none">
+                                                            <form action="{{ path('reply') }}" method="post"
+                                                                  class="form form--flex js-parsley form--comment"><span
+                                                                        class="comment__form-headline"></span>
+                                                                <div class="row">
+
+                                                                    <input type="hidden" name="id"
+                                                                           value="{{ commentaire.id }}">
+                                                                    <div class="form-group">
+                                                                        <label for="in-comment-message"
+                                                                               class="form__label control-label">Message</label>
+                                                                        <textarea id="in-comment-message" name="com"
+                                                                                  required
+                                                                                  class="form-control form__in form__in--textarea"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row row--buttons">
+                                                                    <button type="submit" class="form__submit">Ajouter
+                                                                        commentaire
+                                                                    </button>
+
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                        <div class="rw-ui-container"></div>
+                                                    </div>
+                                                </div>
+
+                                                <ul class="comment__children">
+
+                                                    {% for replys in reply %}
+                                                        {% if replys.idCommentaire == commentaire %}
+                                                            <li class="comment__item">
+                                                                <div class="comment__item-body js-comment-item">
+                                                                    <span class="comment__author">{{ replys.idUser.username }}  {{ replys.idUser.usernameCanonical }}</span>
+
+                                                                    <div class="comment__avatar"><img
+                                                                                src="{{ asset('bundles/front/img/'~replys.idUser.photo ) }} "
+                                                                                style="overflow:hidden;
+
+
+
+    width:80px;
+    height:90px;"/></div>
+                                                                </div>
+                                                                <div class="comment__item-right">
+                                                                    <div class="comment__item-right">
+                                                                        <a href="{{ path('commentaire_edit',{'id':replys.id}) }}">     <button class="comment__item-btn">Edit</button></a>
+                                                                        <a href="{{ path('commentaire_delete',{'id':replys.id}) }}"> <button class="comment__item-btn" data-toggle="modal" data-target="#confirm-delete">Delete</button></a>
+                                                                    </div>
+                                                                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                                                                                </div>
+
+                                                                                <div class="modal-body">
+                                                                                    <p>You are about to delete one track, this procedure is irreversible.</p>
+                                                                                    <p>Do you want to proceed?</p>
+                                                                                    <p class="debug-url"></p>
+                                                                                </div>
+
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                                                                    <a class="btn btn-danger btn-ok">Delete</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="comment__info">
+                                                                    <span class="comment__date">   <div>  <time
+                                                                                    datetime="2009-08-29"
+                                                                                    class="article">
+                                                            <strong>{{ replys.dateReply|date('M') }}
+                                                                --{{ replys.dateReply|date('Y') }}
+                                                                --{{ replys.dateReply|date('d') }}
+                                                                                             </strong></time></div></span>
+                                                                    <div class="comment__content">
+
+                                                                        <p>{{ replys.commentaireReply }}</p>
+
+                                                                        <div class="rw-ui-container"></div>
+                                                                        <!-- end of block .comment__item-body-->
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% endif %}
+
+                                                    {% endfor %}
+
+
+                                                </ul>                             <!-- end of block .comment__item-body-->
+                                            {% endfor %}
+
+                                        </li>
+
+                                    </ul>
+
+
+
+                                    <div class="comment__footer">
+                                        <!-- BEGIN PAGINATION-->
+
+                                        <!-- END PAGINATION-->
+                                        <div class="comment__form">
+                                            <h3 class="comment__form-title">Ajouter un commentaire</h3>
+                                            <div class="comment__form js-form-comment-wrap">
+                                                <form action="{{ path('reply') }}" method="post"
+                                                      class="form form--flex js-parsley form--comment"><span
+                                                            class="comment__form-headline"></span>
+                                                    <div class="row">
+
+
+                                                        <div class="form-group">
+                                                            <label for="in-comment-message"
+                                                                   class="form__label control-label">Message</label>
+                                                            <textarea id="in-comment-message" name="com" required
+                                                                      class="form-control form__in form__in--textarea"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row row--buttons">
+                                                        <button type="submit" class="form__submit">Ajouter commentaire
+                                                        </button>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- end of block .comment__form-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <!-- END LISTING-->
+                        <!-- BEGIN SIDEBAR-->
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    Mes Annonces</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    Mes Demandes</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    Mes Favories</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    Mes Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    Mes Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistiques</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Paramètres</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    </svg>
+                                                    Deconnèxion</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+   <script type="text/javascript">(function(d, t, e, m){
+
+               // Async Rating-Widget initialization.
+               window.RW_Async_Init = function(){
+
+                   RW.init({
+                       huid: "356326",
+                       uid: "fcaed583fffba2df2735d606e93e2f2e",
+                       source: "website",
+                       options: {
+                           "size": "large",
+                           "type": "nero",
+                           "style": "thumbs",
+                           "isDummy": false
+                       }
+                   });
+                   RW.render();
+               };
+               // Append Rating-Widget JavaScript library.
+               var rw, s = d.getElementsByTagName(e)[0], id = "rw-js",
+                       l = d.location, ck = "Y" + t.getFullYear() +
+                               "M" + t.getMonth() + "D" + t.getDate(), p = l.protocol,
+                       f = ((l.search.indexOf("DBG=") > -1) ? "" : ".min"),
+                       a = ("https:" == p ? "secure." + m + "js/" : "js." + m);
+               if (d.getElementById(id)) return;
+               rw = d.createElement(e);
+               rw.id = id; rw.async = true; rw.type = "text/javascript";
+               rw.src = p + "//" + a + "external" + f + ".js?ck=" + ck;
+               s.parentNode.insertBefore(rw, s);
+           }(document, new Date(), "script", "rating-widget.com/"));</script>
+
+
+{% endblock %}
+

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Demandes list</h1>
+
+    <table>
+        <thead>
+        <tr>
+
+            <th>Commentaire</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+
+                <td>{{ commentaire.commentaire }}</td>
+
+                <td>{{ commentaire.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('commentaire_show', { 'id': commentaire.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('commentaire_edit', { 'id': commentaire.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('my_app_user_commentaire') }}">Create a new commentairee</a>
+        </li>
+    </ul>
+    <div class="navigation">
+        {{ knp_pagination_render(entities) }}
+    </div>
+{% endblock %}

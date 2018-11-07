@@ -1,0 +1,197 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <!-- <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-default.css') }}">-->
+    <div class="dashboard menu-default hover-default sidebar-left">
+        <div class="site-wrap js-site-wrap" >
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+
+                            <h1 class="site__title site__title--center">Mes Favories</h1>
+
+                        </header>
+                        <!-- BEGIN LISTING-->
+
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+
+
+                            </header>
+
+
+                            <div class="site__main">
+
+
+
+                                {% if f|length == 0 %}
+                                    <h1 class="site__headline" style="color: #8b211e;font-size: 20px"><center>Vous n'avez aucun favoris</center></h1>
+                                    {% else %}
+                                        <h1 class="site__headline" style="font-size: 15px"><center>Vous avez {{ f|length }} favoris</center></h1>
+                                {% endif %}
+                                <div class="widget js-widget widget--main widget--no-margin">
+                                    <center> <div class="navigation">
+                                        {{ knp_pagination_render(pagination) }}
+                                    </div> </center>
+                                    <div class="widget__content">
+
+                                        <div class="listing--items listing--grid listing--favorites listing--lg-4">
+
+                                            {% for i in pagination %}
+
+                                            <div class="listing__item js-listing-item">
+                                                <div class="listing__thumb">
+                                                    <button class="listing__select js-listing" style="color: #FF0000;background-color: #0c0c0c" data-toggle="modal" data-target="#confirm-delete" data-href="{{ path('Supprimer Favories',{'id':i.id})}}" >X</button>
+                                                    <a href="{{ path('afficher Annonce',{'id':i.idAnnonce.id}) }}" class="item-photo item-photo--static"><img src="http://localhost:9090/uprofils/{{ img[i.id]|first }}" alt=""/>
+                                                        <figure class="item-photo__hover"><span class="item-photo__more">Details</span></figure></a>
+                                                </div>
+                                                <!-- end of block .listing__thumb-->
+                                                <div class="listing__info">
+                                                    <div class="listing__categories"><a class="listing__category">{{ i.idAnnonce.adresse }}</a>
+                                                    </div><a href="" class="listing__title">{{ i.idAnnonce.batiment }}{{ i.idAnnonce.codePostal }}</a>
+                                                </div>
+                                                <!-- end of block .listing__info-->
+                                            </div>
+                                                {% endfor %}
+
+                                        </div>
+
+                                        <div id="confirm-delete" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <h4 class="modal-title">Confirmer suppression</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Voulez vous vraiment supprimer cette annonce de vos favoris?</p>
+                                                        <p class="text-warning"><small>Vous pouvez la rajouter ultériérement.</small></p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                       <a class="btn btn-primary btn-ok">Supprimer</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <!-- END LISTING-->
+                        <!-- BEGIN SIDEBAR-->
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Annonces</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    Mes Annonces</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    Mes Demandes</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    Mes Favories</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    Mes Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    Mes Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistiques</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Paramètres</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    </svg>
+                                                    Deconnèxion</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('bundles/vendor/clockpicker/assets/js/jquery.js') }}"></script>
+    <script>
+        $("document").ready(function () {
+
+
+            $('#confirm-delete').on('show.bs.modal', function(e) {
+
+                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+
+                $('.debug-url').html('<strong id="url">' + $(this).find('.btn-ok').attr('href') + '</strong>');
+
+
+            });
+
+        });
+
+    </script>
+
+{% endblock %}

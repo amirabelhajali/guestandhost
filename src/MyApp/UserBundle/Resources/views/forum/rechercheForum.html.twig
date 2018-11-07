@@ -1,0 +1,193 @@
+{% extends 'MyAppUserBundle:forum:indexForum.html.twig' %}
+{% block body %}
+    <script>
+       $(document).ready(function () {
+           $('#option_2').click(function () {
+               $('#dis').toggle();
+           });
+           $('#option_1').change(function () {
+               $('#rep').toggle();
+           });
+       });
+    </script>
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a></li>
+                <li class="breadcrumbs__item"><a href="{{ path('my_app_user_forumIndex') }}" class="breadcrumbs__link">Forum index</a></li>
+                <li class="breadcrumbs__item"><a href="#" class="breadcrumbs__link">Recherche</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="center"  style="background-image: url('{{ asset('bundles/front/media-demo/banner/BackGForum.jpg') }}');background-size: cover;">
+    <div class="container">
+            <div class="row">
+                <!-- BEGIN LISTING-->
+                <div class="site site--dashboard" style="width:100%">
+                    <div class="site__main">
+                        <div class="widget js-widget widget--dashboard">
+                            <div class="widget__content">
+                                <!-- BEGIN Favorites-->
+                                <div class="listing--items listing--list">
+                                    <div class="site__panel">
+                                        <div class="site__filter" style="margin-top:0px">
+                                            <form action="{{ path("RechercheForum") }}" method="get" style="margin-top: 5px">
+                                                <label for="rech" class="control-label" style="color:white;margin-top:10px" >Mots clés</label>
+                                                <input type="text" placeholder="Rechercher.." class="form-control" name="search" id="rech" style="width:510px;font-family:Source Sans Pro, sans-serif;">
+                                                <button type="submit" class="form__lens col-lg-2"><span class="glyphicon glyphicon-search" style="margin-left:60px"></span></button>
+                                            </form>
+                                            <div class="form-group" style="margin-left:30px;margin-top: 7px" >
+                                                <label for="in-listing-category" class="control-label" style="color:white;margin-top:7px">Résultats de recherche : </label>
+                                                <div class="form-control" style="display:table-cell">
+                                                    <span id="showD">
+                                                    <input id="option_2" type="checkbox" class="in-checkbox" checked>
+                                                    <label for="option_2" class="in-label">Discussion</label>
+                                                        </span>
+                                                    <input id="option_1" type="checkbox" class="in-checkbox" checked>
+                                                    <label for="option_1" class="in-label" >Réponses</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="listing__list">
+                                        <dl class="listing__item" id="dis">
+                                            <div class="navigation">
+                                                {{ knp_pagination_render(discussions) }}
+                                            </div>
+                                            <dt class="listing__title">Discussions</dt>
+                                            <dd class="listing__body">
+                                                <div class="listing__category"> {{ discussions.getTotalItemCount }} discussion(s) trouvées<br></div>
+                                                {% for i in discussions %}
+                                                    <div class="post" style="padding: 0px;margin-bottom: 10px;box-shadow:0 0 1px 2px #c9cccd;background-color: #f8f8f9">
+                                                        <div class="wrap-ut pull-left">
+                                                            <div class="userinfo pull-left">
+                                                                <div class="avatar" >
+                                                                    <img src="{{ asset(i.idUser.photo) }}" alt="" style="height: 250%;width: 250%;" />
+                                                                    {% set testco = 'Hors ligne' %}
+                                                                    {% for j in users %}
+                                                                        {%   if j.id  == i.idUser.id %}
+                                                                            {% set testco = 'En ligne' %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                    {% if testco ==  'Hors ligne' %}
+                                                                        <div class="status red">&nbsp;</div>
+                                                                    {% else %}
+                                                                        <div class="status green">&nbsp;</div>
+                                                                    {% endif %}
+                                                                </div>
+
+                                                                <div class="icons" style="width: 100px">
+                                                                    <center> {{ i.idUser }}<br>
+                                                                        {% if i.idUser.roles[0] == 'ROLE_ADMIN' %}
+                                                                            <span style="color: #f44336;">Administrateur</span>
+                                                                        {% else %}
+                                                                            <span style="color: #009688;">Membre</span>
+                                                                        {% endif %}
+                                                                    </center>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="posttext pull-left" style="border-left: 1px solid #ddd; height: 210px;padding: 15px">
+                                                                <h2><a href="{{ path('discussion',{'id':i.id}) }}">{{ i.titre }}</a></h2>
+                                                                <hr>
+                                                                <div style="padding-left: 20px">
+                                                                    {% if i.lastrep.id is defined %}
+                                                                        <a style="border: 0px;color: #2c3e50;;" href="{{ path('discussion', {'id': i.id, 'idR' : i.lastrep.id }) }}">{{ i.lastrep }}<span class="fa fa-arrow-right" style="margin-left:10px"></span></a>
+                                                                        <br>par {{ i.lastrep.idUser }}
+                                                                        le {{ i.lastrep.datepost|date('Y-m-d H:m')}}
+                                                                    {% else %}
+                                                                        <span style="color:#2c3e50;">Personne n'a répondu à cette discussion<span class="fa fa-frown-o" style="margin-left:10px"></span><br></span>
+                                                                        <a style="border: 0px;color: #ff6347;" href="{{ path('discussion', {'id' : i.id ,'idR': 'newrep'}) }}">Soyez le premier a répondre <span class="fa fa-arrow-right" style="margin-left:10px"></span></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </div>
+                                                        <div class="postinfo pull-left" style="height:210px;">
+                                                            <div class="comments" style="margin-top:20px">
+                                                                <div class="commentbg">
+                                                                    {{ i.nbrep }}
+                                                                    <div class="mark"></div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="views"><i class="fa fa-eye"></i> {{ i.nbvues }} </div>
+                                                            <div class="views"><i class="fa fa-heart"></i> {{ i.nblikes }} </div>
+                                                            <div class="time"><i class="fa fa-clock-o"></i>&nbsp;{{ i.datepost|date('Y-m-d H:m') }}</div>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                {% endfor %}
+                                            </dd>
+                                        </dl>
+                                        <!-- end of block .listing__item-->
+                                        <dl class="listing__item" style="padding-bottom:0px " id="rep">
+                                            <div class="navigation">
+                                                {{ knp_pagination_render(reponses) }}
+                                            </div>
+                                            <dt class="listing__title">Réponses</dt>
+                                            <dd class="listing__body">
+                                                <div class="listing__category">{{ reponses.getTotalItemCount }} réponse(s) trouvées<br></div>
+                                                {% for i in reponses %}
+                                                        <div class="post" id="{{ i.id }}" style="padding: 0px;margin-bottom: 10px;box-shadow:0 0 1px 2px #c9cccd;background-color: #f8f8f9">
+                                                            <div class="topwrap">
+                                                                <div class="userinfo pull-left">
+                                                                    <div class="avatar" >
+                                                                        <img src="{{ asset(i.idUser.photo) }}" alt="" style="height: 250%;width: 250%;" />
+                                                                        {% set testco = 'Hors ligne' %}
+                                                                        {% for j in users %}
+                                                                            {%   if j.id  == i.idUser.id %}
+                                                                                {% set testco = 'En ligne' %}
+                                                                            {% endif %}
+                                                                        {% endfor %}
+                                                                        {% if testco ==  'Hors ligne' %}
+                                                                            <div class="status red">&nbsp;</div>
+                                                                        {% else %}
+                                                                            <div class="status green">&nbsp;</div>
+                                                                        {% endif %}
+                                                                    </div>
+
+                                                                    <div class="icons" style="width: 100px">
+                                                                        <center> {{ i.idUser }}<br>
+                                                                            {% if i.idUser.roles[0] == 'ROLE_ADMIN' %}
+                                                                                <span style="color: #f44336;">Administrateur</span>
+                                                                            {% else %}
+                                                                                <span style="color: #009688;">Membre</span>
+                                                                            {% endif %}
+                                                                        </center>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="posttext pull-left">
+                                                                    <h3 style="margin-top: 10px">{{  i.titre }}</h3>
+                                                                    <p>{{ i.contenu|raw  }}</p>
+                                                                    {% if i.edited %}
+                                                                        <div class="alert alert-dismissable alert-warning" style="margin:5px;margin-top:10px">
+                                                                            <p>Réponse modifiée le {{ i.datelastedit|date('Y-m-d H:m') }}</p>
+                                                                        </div>
+                                                                    {% endif %}
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="postinfobot">
+                                                                <div class="posted pull-left"><i class="fa fa-clock-o"></i> Publiée le : {{ i.datepost|date('Y-m-d H:m') }}</div>
+                                                        </div>
+                                                            <div class="clearfix"></div>
+                                                    </div>
+
+                                                {% endfor %}
+                                            </dd>
+                                        </dl>
+                                        <!-- end of block .listing__item-->
+                                    </div>
+                                </div>
+                                <!-- END listing-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END SIDEBAR-->
+            </div>
+        </div>
+    </div>
+{% endblock %}

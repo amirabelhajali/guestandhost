@@ -1,0 +1,157 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <!-- <link rel="stylesheet" href="{{ asset('bundles/front/css/theme-default.css') }}">-->
+    <div class="dashboard menu-default hover-default sidebar-left">
+        <div class="site-wrap js-site-wrap" >
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+
+                            <h1 class="site__title site__title--center">Agent profile</h1>
+
+                        </header>
+                        <!-- BEGIN LISTING-->
+
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+
+
+                            </header>
+
+
+                            <div class="site__main">
+
+
+
+
+                                <div class="widget js-widget widget--main widget--no-margin">
+
+                                    <div class="widget__content">
+<br><br>
+
+
+
+                                        {{ render_flash_alerts() }}
+
+                                                    <header class="form__header">
+
+                                                        <h5 data-rel="#form-block-4" class="form__title js-form-title" style="float: right">Vous avez {{ app.user.solde }} points</h5>
+                                                        <h3 data-rel="#form-block-4" class="form__title js-form-title">Recharger compte</h3>
+
+                                                    </header>
+                                                    {{ form_start(f,{'attr':{'class':'form form--flex form--profile js-form'}}) }}
+                                                    <div id="form-block-4" class="form__block js-form-block">
+                                                        <div class="row">
+                                                            <div class="form-group form-group--social">
+                                                                <label for="facebook-field" class="control-label">Code de la carte</label>
+
+                                                                {{ form_widget(f.code,{'attr':{'class':'form-control'}}) }}
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        {{ form_widget(f.Recharger,{'attr':{'class':'form__submit'}}) }}
+                                                    </div>
+                                                    {{ form_end(f) }}
+
+                                                <hr>
+
+
+
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <!-- END LISTING-->
+                        <!-- BEGIN SIDEBAR-->
+                        <div class="sidebar sidebar--dashboard">
+                            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Annonces</a>
+                                </div>
+                                <div class="widget__content">
+                                    <nav class="nav nav--sidebar">
+                                        <ul class="nav__list">
+                                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-dashboard"></use>
+                                                    </svg>
+                                                    Profile</a></li>
+                                            <hr class="nav__separator">
+                                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-add-listing"></use>
+                                                    </svg>
+                                                    Mes Annonces</a></li>
+                                            <li class="nav__item">
+
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-news"></use>
+                                                    </svg>
+                                                    Mes Demandes</a></li>
+                                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                     class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-user-admin"></use>
+                                                    </svg>
+                                                    Mes Favories</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-clock"></use>
+                                                    </svg>
+                                                    Mes Experiences</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-listings"></use>
+                                                    </svg>
+                                                    Mes Reservations</a></li>
+                                            <hr class="nav__separator">
+
+                                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-agents"></use>
+                                                    </svg>
+                                                    Statistiques</a></li>
+                                            <li class="nav__item"><a href="#" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-favorite-search"></use>
+                                                    </svg>
+                                                    Paramètres</a></li>
+                                            <li class="nav__item">
+                                                <hr class="nav__separator">
+                                            </li>
+                                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                    <svg class="nav__icon">
+                                                        <use xlink:href="#icon-financials"></use>
+                                                    </svg>
+                                                    Deconnèxion</a></li>
+
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SIDEBAR-->
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

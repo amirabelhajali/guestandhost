@@ -1,0 +1,85 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+
+<div class="center">
+    <div class="container">
+        <div class="row">
+            <header class="site__header">
+                <h1 class="site__title site__title--center">Annonce</h1>
+            </header>
+            <!-- BEGIN LISTING-->
+            <div class="site site--dashboard">
+                <div class="site__main">
+                    <div class="widget js-widget widget--dashboard">
+                        <div class="widget__header">
+                            <h2 class="widget__title">Ajouter une annonce </h2>
+                        </div>
+                        <div class="widget__content">
+                            <!-- BEGIN Favorites-->
+                            <section class="form-property form-property--dashboard">
+                                <!-- Nav tabs-->
+
+
+                                <div class="site__panel" style="margin-bottom: 30px"><span class="site__header-text">
+
+
+                        <ul role="tablist" class="nav form-property__tabs">
+                          <li role="presentation" class="active"><a href="#basic" aria-controls="basic" role="tab" data-toggle="tab">Commençons par l'essentiel</a></li>
+                          <li role="presentation"><a href="#Location" aria-controls="Location" role="tab" data-toggle="tab" class="js-location-tab">Trouvons votre adresse</a></li>
+                          <li role="presentation"><a href="#Photo" aria-controls="Photo" role="tab" data-toggle="tab">Extra</a></li>
+                          <li role="presentation"><a href="#Status" aria-controls="Status" role="tab" data-toggle="tab">Photo</a></li>
+
+                        </ul>
+                                </span></div>
+                                <div class="tab-content form-property__content">
+                                    <div id="basic" role="tabpanel" class="tab-pane active">
+
+                                        <div class="row">
+<div id="Hidden" role="tabpanel" class="tab-pane">
+
+        <div class="map map--location map--dashboard map--hidden js-map-location-dashboard-hidden">
+            <div class="map__header">
+                <button type="button" class="btn--link js-remove-overlays">Delete selected shape</button>
+            </div>
+            <div class="map__block">
+                <div class="row map__autocomplete">
+                    <div class="form-group form-group--autocomplete">
+                        <label for="autocomplete-dashboard hidden" class="control-label">GPS Mapping</label>
+                        <input type="text" placeholder="" required id="autocomplete-dashboard hidden" class="form-control js-autocomplete">
+                    </div>
+                    <button type="button" class="map__geolocation js-geolocate">
+                        <svg>
+                            <use xlink:href="#icon-geolocation"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="map__buttons">
+                    <button type="button" class="map__change-map js-map-btn">Address Map</button>
+                </div>
+                <div class="map__wrap">
+                    <div data-infobox-theme="white" class="map__view map__view--property-form js-map"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group form-group--coords">
+                    <label for="location-lat-dashboard hidden" class="control-label">Lat</label>
+                    <input type="text" placeholder="" id="location-lat-dashboard hidden" class="form-control js-location-coords">
+                </div>
+                <div class="form-group form-group--coords">
+                    <label for="location-lng-dashboard hidden" class="control-label">Lng</label>
+                    <input type="text" placeholder="" id="location-lng-dashboard hidden" class="form-control js-location-coords">
+                </div>
+            </div>
+        </div>
+
+</div>
+
+
+
+
+                                            <script type="text/javascript" src="assets/js/app.js"></script>
+
+
+                                            <script type="text/javascript" src="assets/js/demo.js"></script>
+
+                                            {% endblock %}

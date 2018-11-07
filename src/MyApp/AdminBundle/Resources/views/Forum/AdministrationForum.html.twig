@@ -1,0 +1,216 @@
+{% extends ':default:BackEndIndex.html.twig' %}
+{% block body %}
+    <script src="{{ asset('bundles/front/js/jquery-3.2.0.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#divusers").hide();
+            $("#divadmin").hide();
+            $('#chart').hide();
+            $('#vues').hide();
+            $('#rep').hide();
+            $('#btnco').click(function () {
+                $("#divusers").slideToggle();
+            });
+            $('#btnaco').click(function () {
+                $("#divadmin").slideToggle();
+            });
+            $('#showChart').click(function () {
+                $('#chart').slideToggle();
+            });
+            $('#btnvues').click(function () {
+                event.preventDefault();
+                $('#vues').show();
+                $('#rep').hide();
+                $('#likes').hide();
+                $(this).attr('class', 'nav-link active');
+                $('#btnlikes').attr('class', 'nav-link');
+                $('#btnrep').attr('class', 'nav-link');
+            });
+            $('#btnlikes').click(function () {
+                event.preventDefault();
+                $('#vues').hide();
+                $('#rep').hide();
+                $('#likes').show();
+                $(this).attr('class', 'nav-link active');
+                $('#btnvues').attr('class', 'nav-link');
+                $('#btnrep').attr('class', 'nav-link');
+            });
+            $('#btnrep').click(function () {
+                event.preventDefault();
+                $('#vues').hide();
+                $('#rep').show();
+                $('#likes').hide();
+                $(this).attr('class', 'nav-link active');
+                $('#btnvues').attr('class', 'nav-link');
+                $('#btnlikes').attr('class', 'nav-link');
+            });
+        });
+    </script>
+    <div class="content-area p-y-1">
+        <div class="container-fluid">
+            <h4>Forum</h4>
+            <ol class="breadcrumb no-bg m-b-1">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active"><a href="#">Forum</a></li>
+            </ol>
+            <div class="box box-block bg-white" style="margin-bottom: 20px">
+                <h5>Utlisateurs</h5>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                        <div class="box box-block bg-white tile tile-4 m-b-2" style="margin-bottom: 0px !important;">
+                            <div class="t-icon left bg-success"><i class="fa fa-users"></i></div>
+                            <div class="t-content text-xs-right">
+                                <h6 class="text-uppercase">Utilisateurs</h6>
+                                <h1 class="m-b-0">{{ utlisateurs|length }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="btnco">
+                        <div class="box box-block bg-white tile tile-4 m-b-2" style="margin-bottom: 0px !important;">
+                            <div class="t-icon left bg-danger">
+                                <div style="position: absolute;right: 6px;top: 0;width: 12px;height: 12px;line-height: 12px;border-radius: 50%;border: solid 2px green;background-color: green"></div>
+                                <i class="fa fa-users"></i></div>
+                            <div class="t-content text-xs-right">
+                                <h6 class="text-uppercase">En ligne</h6>
+                                <h1 class="m-b-0">{{ users|length }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                        <div class="box box-block bg-white tile tile-4 m-b-2" style="margin-bottom: 0px !important;">
+                            <div class="t-icon left bg-primary"><i class="fa fa-user"></i></div>
+                            {% set nbV = 0 %}
+                            {% for i in utlisateurs %}
+                                {% for role in i.roles %}
+                                    {%   if role  == 'ROLE_ADMIN' %}
+                                        {% set nbV = nbV + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <div class="t-content text-xs-right">
+                                <h6 class="text-uppercase">Administrateur</h6>
+                                <h1 class="m-b-0">{{ nbV }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" id="btnaco">
+                        <div class="box box-block bg-white tile tile-4 m-b-2" style="margin-bottom: 0px !important;">
+                            {% set nbA = 0 %}
+                            {% for i in users %}
+                                {% for role in i.roles %}
+                                    {%   if role  == 'ROLE_ADMIN' %}
+                                        {% set nbA = nbA + 1 %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                            <div class="t-icon left bg-warning"><i class="fa fa-user">
+                                    <div style="position: absolute;right: 6px;top: 0;width: 12px;height: 12px;line-height: 12px;border-radius: 50%;border: solid 2px green;background-color: green"></div>
+                                </i></div>
+                            <div class="t-content text-xs-right">
+                                <h6 class="text-uppercase">Admin. En ligne</h6>
+                                <h1 class="m-b-0">{{ nbA }}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="divusers">
+                    <div style="width: 0;height: 0;border-left: 20px solid transparent;border-right: 20px solid transparent;border-top: 20px solid #f44236;margin-left:450px">
+
+                    </div>
+                    <div class="box box-block bg-white">
+                        <div class="row">
+                            <span style="color:#f44236"><strong>  Liste des utilisateurs en ligne:  </strong></span>{{ users|join(', ') }}
+                        </div>
+                    </div>
+                </div>
+                <div id="divadmin">
+                    <div style="width: 0;height: 0;border-left: 20px solid transparent;border-right: 20px solid transparent;border-top: 20px solid #f59345;margin-left:1080px">
+                    </div>
+                    <div class="box box-block bg-white">
+                        <div class="row">
+                            <span style="color:#f59345;padding: 10px; "><strong> Liste des administrateurs en ligne:  </strong></span>{{ users|join(', ') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box box-block bg-white" style="margin-bottom: 20px">
+                <h4>Categorie</h4>
+                <div class="row row-md m-b-2" style="margin:20px">
+                    <div class="col-md-12">
+                    {% for i in c %}
+                        {% set var = (i.nbmsg * 100)/rep|length %}
+                    <p class="m-b-0-5"><strong>{{ i }}</strong> <span class="pull-xs-right">{{ var }}%</span></p>
+                    <progress class="progress progress-info progress-sm" value="{{ var }}" max="100">{{ var }}</progress>
+                    {% endfor %}
+                        </div>
+                    </div>
+                <div>
+                    <div style="width: 0;height: 0;border-left: 20px solid transparent;border-right: 20px solid transparent;border-top: 20px solid #20b9ae;margin-left:1080px" id="showChart">
+                    </div>
+                    <div class="box box-block bg-white" id="chart">
+                        <div class="row">
+                            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+                            <script src="//code.highcharts.com/4.1.8/highcharts.js"></script>
+                            <script src="//code.highcharts.com/4.1.8/modules/exporting.js"></script>
+                            <script type="text/javascript">
+                                {{ chart(chart) }}
+                            </script>
+                            <div id="piechart" style="min-width: 400px; height: 400px; margin: 0 auto">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <div class="box box-block bg-white" style="margin-bottom: 20px">
+                <h4>Discussions </h4>
+                <h5 class="text-danger">Top 5!</h5>
+                <ul class="nav nav-tabs nav-tabs-2">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" id="btnlikes"><i class="fa fa-heart" style="margin:10px"></i>Nombre de likes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnvues"><i class="fa fa-eye" style="margin:10px"></i>Nombre de vues</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="btnrep"><i class="fa fa-reply" style="margin:10px"></i>Nombre de réponses</a>
+                    </li>
+                </ul>
+                <table class="table m-md-b-0">
+                    <tbody id="likes">
+                    {% set j = 0 %}
+                    {% for i in topdisl %}
+                    {% set j = j + 1 %}
+                    <tr>
+                        <th scope="row" >{{ j }}</th>
+                        <td style="width:1100px;">{{ i }}</td>
+                        <td class="text-primary"><strong>{{ i.nblikes }}</strong></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tbody id="vues">
+                    {% set j = 0 %}
+                    {% for i in topdisv %}
+                        {% set j = j + 1 %}
+                        <tr>
+                            <th scope="row" >{{ j }}</th>
+                            <td style="width:1100px;">{{ i }}</td>
+                            <td class="text-primary"><strong>{{ i.nbvues }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tbody id="rep">
+                    {% set j = 0 %}
+                    {% for i in topdisr %}
+                        {% set j = j + 1 %}
+                        <tr>
+                            <th scope="row" >{{ j }}</th>
+                            <td style="width:1100px;">{{ i }}</td>
+                            <td class="text-primary"><strong>{{ i.nbrep }}</strong></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock %}

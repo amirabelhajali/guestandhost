@@ -1,0 +1,43 @@
+{% extends 'MyAppAdminBundle:Default:index.html.twig' %}
+
+{% block body %}
+    <h1>Cuisines list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Descriptif</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cuisine in cuisines %}
+            <tr>
+                <td><a href="{{ path('cuisine_show', { 'id': cuisine.id }) }}">{{ cuisine.descriptif }}</a></td>
+                <td>{{ cuisine.nom }}</td>
+                <td>{{ cuisine.prix }}</td>
+                <td>{{ cuisine.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('cuisine_show', { 'id': cuisine.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('cuisine_edit', { 'id': cuisine.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('cuisine_new') }}">Create a new cuisine</a>
+        </li>
+    </ul>
+{% endblock %}

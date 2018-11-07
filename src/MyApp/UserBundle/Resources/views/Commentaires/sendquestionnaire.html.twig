@@ -1,0 +1,62 @@
+
+
+{% block body %}
+    <table class="wrapper" style="background: #f6f6f6; border-spacing: 0; font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif; width: 100%;">
+        <tr class="header" style="background: #00bbaa;">
+            <td colspan="3">
+                <table class="header__wrap" style="border-spacing: 0; margin: 0 auto; max-width: 600px; width: 600px;">
+                    <tr>
+                        <td>
+                            <p class="header__slogan" style="color: #fff; font-size: 13px; font-style: italic;">“ Realty Space. Find apartments,<br>single-family homes and everything in between ”</p>
+                        </td>
+                        <td>
+                            <p class="header__title" style="color: #2c3e50; font-size: 15px; text-align: right;">Connect With Us</p>
+                        </td>
+                        <td class="header__social" style="text-align: right;"><a href="http://facebook.com" class="header__link" style="color: #2c3e50; display: inline-block; margin: 5px 0 0 10px;">
+                                <img src="assets/img/social/icon-facebook.png" alt="" style="max-width: 100%;"></a><a href="http://twitter.com" class="header__link" style="color: #2c3e50; display: inline-block; margin: 5px 0 0 10px;"><img src="assets/img/social/icon-twitter.png" alt="" style="max-width: 100%;"></a><a href="http://google.com" class="header__link" style="color: #2c3e50; display: inline-block; margin: 5px 0 0 10px;"><img src="assets/img/social/icon-google.png" alt="" style="max-width: 100%;"></a></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr class="main">
+            <table class="body" style="background: #fff; border-spacing: 0; margin: 0 auto; max-width: 600px;">
+
+                <br><br><br><br><br><br><br>
+                <td colspan="3"><img src="{{ asset('bundles/front/img/feedbackK.jpg') }}" alt="" style="max-width: 100%;"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <table class="content" style="border-spacing: 0; margin: 0 auto; max-width: 500px;">
+                            <tr>
+                                <td>
+                                    <h1 style="color: #2c3e50; font-size: 46px;">Thanks, AZER ! </h1>
+                                    <p style="color: #2c3e50; font-size: 15px;">We've recored Your Feedback
+                                    </p>
+                                    <p style="color: #2c3e50; font-size: 15px;">
+
+                                        Have More Feedback ?
+                                    </p>
+                                    <a href=" {{ path('AllMydemande_show') }}"> <p style="color: #2c3e50; font-size: 15px; text-align: center;"><a href="#" class="btn-link"
+      style="background: #f3bc65; background-image: none; border: none; border-bottom: 4px solid #d99221; color: #222222; cursor: pointer; display: inline-block;
+       font-weight: bold; line-height: 35px; margin-bottom: 0; padding-left: 10px;
+       padding-right: 10px; text-align: center; text-decoration: none; text-transform: uppercase;
+        vertical-align: middle; white-space: nowrap; width: 210px;"> Tell Us More !</a></p>
+
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+            </table>
+            </td>
+        </tr>
+        <tr class="footer" style="color: #2c3e50; font-size: 15px; text-align: center;">
+
+        </tr>
+    </table>
+
+{% endblock %}

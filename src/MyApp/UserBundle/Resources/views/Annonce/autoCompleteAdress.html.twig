@@ -1,0 +1,220 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+{% block body %}
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCCh3CYvqOO28AXwwVqkVpBCz29XxluGIU"></script>
+    <script src="{{ asset('bundles/front/js/jquery-3.2.0.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $("#map_canvas").css('position','absolute');
+            $("#map_canvas").css('overflow','');
+
+        });
+
+    </script>
+    <script>
+        var map;
+        var geocoder;
+        var mapOptions = { center: new google.maps.LatLng(0.0, 0.0), zoom: 2,
+            mapTypeId: google.maps.MapTypeId.satellite    };
+
+        function initialize() {
+            var myOptions = {
+                center: new google.maps.LatLng(36.835769, 10.247693 ),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.satellite
+            };
+
+            geocoder = new google.maps.Geocoder();
+            var map = new google.maps.Map(document.getElementById("map_canvas"),
+                myOptions);
+            google.maps.event.addListener(map, 'click', function(event) {
+                placeMarker(event.latLng);
+            });
+
+            var marker;
+            function placeMarker(location) {
+                if(marker){ //on vérifie si le marqueur existe
+                    marker.setPosition(location); //on change sa position
+                }else{
+                    marker = new google.maps.Marker({ //on créé le marqueur
+                        position: location,
+                        map: map
+                    });
+                }
+                document.getElementById('lat').value=location.lat();
+                document.getElementById('lng').value=location.lng();
+                getAddress(location);
+            }
+
+            function getAddress(latLng) {
+                geocoder.geocode( {'latLng': latLng},
+                    function(results, status) {
+                        if(status == google.maps.GeocoderStatus.OK) {
+                            if(results[0]) {
+                                local =results[0].formatted_address
+                                document.getElementById("address").value = local;
+                            }
+                            else {
+                                document.getElementById("address").value = "No results";
+                            }
+                        }
+                        else {
+                            document.getElementById("address").value = status;
+                        }
+                    });
+            }
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <style>
+        #map {
+            height: 80%;
+            width: 80%;
+        }
+        #map_canvas
+        {
+            margin: 0;
+            padding: 0;
+            height: 80% ;
+            width: 80%;
+        }
+    </style>
+
+    <div class="box js-box">
+        <!-- BEGIN HEADER-->
+        <header class="header header--brand">
+            <div class="container">
+
+            </div>
+        </header>
+        <!-- END HEADER-->
+        <!-- BEGIN NAVBAR-->
+        <div id="header-nav-offset"></div>
+        <nav id="header-nav" class="navbar navbar--header">
+
+        </nav>
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap">
+            <div class="widget js-widget">
+                <div class="widget__content">
+                    <div>
+                        <div>
+                            <div style="" data-infobox-theme="dark" ></div>
+                        </div>
+                        <div class="container">
+                            <div>
+                                <!-- BEGIN SEARCH-->
+                                <div class="row">
+                                    <div id="map_canvas" style="margin: -200px;height: 500px;margin-left: 0px;width: 1200px"></div>
+
+
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget js-widget widget--landing widget--gray">
+            <div class="widget__header">
+                <h2 class="widget__title">Les annonces</h2>
+                <h5 class="widget__headline">Réservez des logements uniques et vivez là-bas comme des locaux. A travers leurs expériences host and guest, voyageurs et hôtes peuvent construire des relations concrètes avec de vraies personnes venues du monde entier.</h5>
+                <h5 class="widget__headline">Réservez des logements uniques et vivez là-bas comme des locaux. A travers leurs expériences host and guest, voyageurs et hôtes peuvent construire des relations concrètes avec de vraies personnes venues du monde entier.</h5>
+            </div>
+            {{ form_start(f) }}
+
+            <div class="widget__content">
+                <!-- BEGIN PROPERTIES INDEX-->
+                <div class="tab tab--properties">
+                    <!-- Nav tabs-->
+                    <ul role="tablist" class="nav tab__nav">
+                        <li class="active"><a href="#tab-popular" aria-controls="tab-popular" role="tab" data-toggle="tab" class="properties__btn js-pgroup-tab"></a></li>
+                        <li><a href="#tab-recent" aria-controls="tab-recent" role="tab" data-toggle="tab" class="properties__btn js-pgroup-tab"></a></li>
+                        <li><a href="#tab-featured" aria-controls="tab-featured" role="tab" data-toggle="tab" class="properties__btn js-pgroup-tab"></a></li>
+
+
+                        {{ form_widget(f.longitude,{'id':'lng'}) }}
+
+                        {{ form_widget(f.altitude,{'id':'lat'}) }}
+
+                        {{ form_widget(f.idPays,{'id':'address'}) }}
+
+
+{{ form_widget(f.rechercher) }}
+                        {{ form_end(f) }}
+
+                    </ul>
+                    <div id="divc">
+                        <!-- Tab panes--> {% for i in m %}
+                        <div class="tab-content">
+                            <div id="tab-popular" class="tab-pane in active">
+                                <div class="listing listing--grid">
+                                    <div class="listing__item">
+                                        <div class="properties properties--grid">
+                                            <div class="properties__thumb"><a href="property_details.html" class="item-photo">
+                                                    <img src="http:\\localhost:9090\uprofils\{{ i.image|first }}">
+                                                    <figure class="item-photo__hover item-photo__hover--params"><span class="properties__params">{{ i.nombreVoyageur }} voyageurs </span><span class="properties__params"></span><span class="properties__time"></span>
+                                                    </figure></a><span class="properties__ribon">{{ i.typeMaison }}</span>
+                                            </div>
+                                            <div class="properties__details">
+                                                <div class="properties__info"><a href="property_details.html" class="properties__address"><span class="properties__address-street"></span><span class="properties__address-city"></span></a>
+                                                    <div class="properties__offer">
+                                                        <div class="properties__offer-column">
+                                                            <div class="properties__offer-label">Prix</div>
+                                                            <div class="properties__offer-value"><strong> {{ i.prix }} Dinars</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="properties__offer-column">
+
+                                                            <div class="properties__offer-value"><span class="properties__offer-period"></span>
+                                                                <a href="{{ path('afficher Annonce',{'id':i.id}) }}">Voir les details</a>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="properties__params--mob">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end of block .properties__info-->
+                                        </div>
+                                        <!-- end of block .properties__item-->
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+<hr>
+                {% endfor %}
+
+            </div>
+        </div>       </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+    </div>
+
+
+    </div>
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'MyAppUserBundle:experience:layout.html.twig' %}
+{% block body %}
+
+    <nav class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li class="breadcrumbs__item"><a href="{{ url('my_app_user_homepage') }}" class="breadcrumbs__link">Accueil</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('experiences_affichage') }}" class="breadcrumbs__link">My
+                        Experiences</a>
+                </li>
+                <li class="breadcrumbs__item"><a href="{{ url('graphePie') }}" class="breadcrumbs__link">My
+                        graphe Pie</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="center">
+        <div class="container">
+            <div class="row">
+                <div class="site__main">
+                    <header class="site__header">
+                        <h1 class="site__title">MA LISTE DE EXPÉRIENCE</h1>
+                        <h2 class="site__headline">Ma liste contient {{ nbp|length }} experience</h2>
+                        <h2 class="site__headline"> selection  pays</h2>
+                    </header>
+                    {{ form_widget(fo.Pays) }}
+                    <div id="chart">
+                    <select>
+                        <option value="1">Pie</option>
+                        <option value="2">Line</option>
+                    </select>
+                    </div>
+                    <div class="site__main">
+                        <div class="widget js-widget widget--main">
+                            <div class="widget__content">
+                                <div class="listing listing--grid" id="exp">
+
+
+                                    <div id="container1" style="min-width: 310px;  height: 400px; margin: 0 auto">
+
+
+
+                                </div>
+                                    <div id="Line" style="min-width: 310px;  height: 400px; margin: 0 auto">
+                                        {{ include('MyAppUserBundle:experience/Graphe:LineChart.html.twig') }}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('bundles/main/exporting.js') }}"></script>
+    <script src="{{ asset('bundles/main/highcharts.js') }}"></script>
+    <script src="{{ asset('bundles/main/data.js') }}"></script>
+    <script src="{{ asset('bundles/main/drilldown.js') }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('bundles/main/jquery.min.js') }}"></script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: Routing.generate('paysChart'),
+                beforeSend: function () {
+                    if ($(".loading").length == 0) {
+                        $("form #ll").append('<div class="loading"></div>');
+                    }
+                },
+                success: function (data) {
+                    $("#form_Pays").html('');
+                    for (i in data) {
+                        x = data[i];
+                        $('#form_Pays').append('<option value="' + x[1] + '" selected="selected"> ' + x[0] + ' </option>');
+                    }
+                    $(".loading").remove();
+                }
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        $("document").ready(function () {
+            $("#form_Pays").click(
+                function () {
+                    console.log("oui");
+                    var a = $('#form_Pays').find(":selected").text();
+                    $.ajax({
+                        type: 'get',
+                        dataType: 'json',
+                        //  url: Routing.generate('graphePie',{'idPays':$(this).val()}),
+                        url: 'http://localhost:8000/GuestAndHost/web/app_dev.php/experience/datachart/' + $(this).val(),
+                        beforeSend: function () {
+                            console.log("oui");
+                            if ($(".loading").length == 0) {
+                                $("#ll").append('<div class="loading "></div>');
+                            }
+                            console.log("oui");
+                        },
+                        success: function (data) {
+                            Highcharts.chart('container1', {
+                                chart: {
+                                    type: 'pie'
+                                },
+                                title: {
+                                    text: 'Pourcentages des Expression de ' + '{{ user }}' + ' par Ville donne ' + a
+                                },
+                                plotOptions: {
+                                    series: {
+                                        dataLabels: {
+                                            enabled: true,
+                                            format: '{point.name}: {point.y:.1f}%'
+                                        }
+                                    }
+                                },
+
+                                tooltip: {
+                                    headerFormat: '<span style="font-size:11px">' + a + '</span><br>',
+                                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> total<br/>'
+                                },
+                                series: [{
+                                    name: 'Brands',
+                                    colorByPoint: true,
+                                    data: data
+                                }],
+                            });
+
+
+                        }
+                    });
+
+                });
+        })
+    </script>
+    <script>
+        $("#chart").click(
+            function () {
+                console.log("oui");
+                var a = $('#chart').find(":selected").text();
+
+                if (a == "Pie") {
+                    $('#container1').show();
+                    $('#Line').hide();
+                } else {
+                    $('#Line').show();
+                    $('#container1').hide();
+                }
+
+            }
+        )
+    </script>
+{% endblock %}

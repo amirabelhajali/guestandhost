@@ -1,0 +1,303 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+{% block body %}
+
+    <div class="dashboard_blog menu-default hover-default sidebar-left">
+        <div id="header-nav-offset"></div>
+
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap">
+            <!-- BEGIN CENTER SECTION-->
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title">Enquête de Satisfaction
+                            </h1>
+                            <h2 class="site__headline">
+
+
+
+
+                            </h2>  </header>
+                        <div class="site__panel">
+                            <span class="site__header-text">
+
+                                Soucieux de l’amélioration continue de nos prestations, et afin de répondre au mieux à vos attentes, Nous avons mis en place
+                                une enquête de satisfaction. Toutes les données transmises restent confidentielles et seront traitées de façon anonyme
+                                Nous vous serions reconnaissants de bien vouloir prendre le temps de remplir le questionnaire suivant :</h2>
+
+
+                            </span></div>
+                        <div class="site__main">
+                            <div class="widget js-widget widget--main">
+                                <div class="widget__content">
+                                    <!-- BEGIN FAQ-->
+                                    <form method="post" action="{{ path('sendquestionnaire') }}">
+                                        {% for question in questions%}
+
+                                    <div role="tablist" aria-multiselectable="true" class="faq">
+                                        {% if question.id==1 %}
+                                        <dl class="faq__item">
+                                            <dt id="heading-0" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-0" aria-expanded="true" aria-controls="collapse-0" class="faq__expander collapsed">{{ question.question}}</a></dt>
+                                            <dd id="collapse-0" role="tabpanel" aria-labelledby="heading-0" class="faq__content collapse">
+                                                <div class="faq__body">
+
+                                                       <input type="hidden" name="q1" value="1">
+
+                                                    <input type="radio"     name="qt1" value="Excellent"> Excellent <br>
+                                                        <input type="radio" name="qt1" value="Bien"> Bien <br>
+                                                        <input type="radio" name="qt1" value="moyenne"> moyenne <br>
+                                                        <input type="radio" name="qt1" value="terrible"> terrible<br>
+
+
+                                                </div>
+                                                <div class="faq__footer"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-0" aria-controls="collapse-0" class="faq__close">Close</a></div>
+                                            </dd>
+                                        </dl>
+                                        {% endif%}
+                                        {% if question.id==2 %}
+                                        <!-- end of block .faq__item-->
+                                        <dl class="faq__item">
+                                            <dt id="heading-1" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1" class="faq__expander collapsed"> {{ question.question}} </a></dt>
+                                            <dd id="collapse-1" role="tabpanel" aria-labelledby="heading-1" class="faq__content collapse">
+                                                <div class="faq__body">
+                                                    <p>
+
+
+                                                        <input type="hidden" name="q2" value="2">
+
+                                                        <input type="radio" name="qt2" value="Excellent"> Excellent <br>
+                                                        <input type="radio" name="qt2" value="Bien"> Bien <br>
+                                                        <input type="radio" name="qt2" value="moyenne"> moyenne <br>
+                                                        <input type="radio" name="qt2" value="terrible"> terrible<br>
+
+
+                                                </div>
+                                                <div class="faq__footer"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-1" aria-controls="collapse-1" class="faq__close">Close</a></div>
+                                            </dd>
+                                        </dl>
+                                        {% endif%}
+                                        {% if question.id==3 %}
+                                        <!-- end of block .faq__item-->
+                                        <dl class="faq__item">
+                                            <dt id="heading-2" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-2" aria-expanded="true" aria-controls="collapse-2" class="faq__expander collapsed">{{ question.question}}</a></dt>
+                                            <dd id="collapse-2" role="tabpanel" aria-labelledby="heading-2" class="faq__content collapse">
+                                                <div class="faq__body">
+
+                                                    <input type="hidden" name="q3" value="3">
+
+                                                        <input type="radio" name="qt3" value="Excellent"> Excellent <br>
+                                                        <input type="radio" name="qt3" value="Bien"> Bien <br>
+                                                        <input type="radio" name="qt3" value="moyenne"> moyenne <br>
+                                                        <input type="radio" name="qt3" value="terrible"> terrible<br>
+
+
+                                                </div>
+                                                <div class="faq__footer"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-2" aria-controls="collapse-2" class="faq__close">Close</a></div>
+                                            </dd>
+                                        </dl>
+                                        {% endif%}
+                                        {% if question.id==4 %}
+                                        <!-- end of block .faq__item-->
+                                        <dl class="faq__item">
+                                            <dt id="heading-3" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-3" aria-expanded="true" aria-controls="collapse-3" class="faq__expander collapsed">{{ question.question}}</a></dt>
+                                            <dd id="collapse-3" role="tabpanel" aria-labelledby="heading-3" class="faq__content collapse">
+                                                <div class="faq__body">
+
+                                                    <input type="hidden" name="q4" value="4">
+
+                                                    <input type="radio" name="qt4" value="Excellent"> Excellent <br>
+                                                    <input type="radio" name="qt4" value="Bien"> Bien <br>
+                                                    <input type="radio" name="qt4" value="moyenne"> moyenne <br>
+                                                    <input type="radio" name="qt4" value="terrible"> terrible<br>
+                                                </div>
+                                                <div class="faq__footer"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-3" aria-controls="collapse-3" class="faq__close">Close</a></div>
+                                            </dd>
+                                        </dl>
+                                        {% endif%}
+                                        {% if question.id==5 %}
+                                        <dl class="faq__item">
+                                            <dt id="heading-4" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-4" aria-expanded="true" aria-controls="collapse-4" class="faq__expander collapsed">{{ question.question}}</a></dt>
+                                            <dd id="collapse-4" role="tabpanel" aria-labelledby="heading-4" class="faq__content collapse">
+                                                <div class="faq__body">
+
+                                                    <input type="hidden" name="q5" value="5">
+
+                                                        <input type="radio" name="qt5" value="Excellent"> Excellent <br>
+                                                        <input type="radio" name="qt5" value="Bien"> Bien <br>
+                                                        <input type="radio" name="qt5" value="moyenne"> moyenne <br>
+                                                        <input type="radio" name="qt5" value="terrible"> terrible<br>
+
+
+
+
+                                                </div>
+                                                <div class="faq__footer"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-4" aria-controls="collapse-4" class="faq__close">Close</a></div>
+                                            </dd>
+                                        </dl>
+                                        {% endif%}
+                                        {% if question.id==6 %}
+                                        <!-- end of block .faq__item-->
+                                        <dl class="faq__item">
+                                            <dt id="heading-5" role="tab" class="faq__title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-5" aria-expanded="true" aria-controls="collapse-5" class="faq__expander collapsed">{{ question.question}}</a></dt>
+                                            <dd id="collapse-5" role="tabpanel" aria-labelledby="heading-5" class="faq__content collapse">
+                                                <div class="faq__body">
+
+                                                    <input type="hidden" name="q6" value="6">
+
+                                                        <input type="radio" name="qt6" value="Excellent"> Excellent <br>
+                                                        <input type="radio" name="qt6" value="Bien"> Bien <br>
+                                                        <input type="radio" name="qt6" value="moyenne"> moyenne <br>
+                                                        <input type="radio" name="qt6" value="terrible"> terrible<br>
+
+
+
+                                                </div>
+                                                <div class="faq__footer"><a data-toggle="collapse" data-parent="#accordion" href="#collapse-5" aria-controls="collapse-5" class="faq__close">Close</a></div>
+                                            </dd>
+                                        </dl>
+                                        {% endif%}
+                                        <!-- END FAQ-->
+                                    </div>
+                                        {% endfor %}
+                                        <input type="submit" name="ajouter" value="Envoyer">
+                                       </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END LISTING-->
+        <!-- BEGIN SIDEBAR-->
+        <div class="sidebar sidebar--dashboard">
+            <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                </div>
+                <div class="widget__content">
+                    <nav class="nav nav--sidebar">
+                        <ul class="nav__list">
+                            <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                     class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-dashboard"></use>
+                                    </svg>
+                                    Profile</a></li>
+                            <hr class="nav__separator">
+                            <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-add-listing"></use>
+                                    </svg>
+                                    Mes Annonces</a></li>
+                            <li class="nav__item">
+
+                            </li>
+                            <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-news"></use>
+                                    </svg>
+                                    Mes Demandes</a></li>
+                            <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                     class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-user-admin"></use>
+                                    </svg>
+                                    Mes Favories</a></li>
+                            <hr class="nav__separator">
+
+                            <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-clock"></use>
+                                    </svg>
+                                    Mes Experiences</a></li>
+                            <li class="nav__item">
+                                <hr class="nav__separator">
+                            </li>
+                            <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-favorite-listings"></use>
+                                    </svg>
+                                    Mes Reservations</a></li>
+                            <hr class="nav__separator">
+
+                            <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-favorite-agents"></use>
+                                    </svg>
+                                    Statistiques</a></li>
+                            <li class="nav__item"><a href="#" class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-favorite-search"></use>
+                                    </svg>
+                                    Paramètres</a></li>
+                            <li class="nav__item">
+                                <hr class="nav__separator">
+                            </li>
+                            <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                    <svg class="nav__icon">
+                                        <use xlink:href="#icon-financials"></use>
+                                    </svg>
+                                    Deconnèxion</a></li>
+
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+        <!-- END SIDEBAR-->
+        <div class="clearfix"></div>
+
+
+        {% block questionnaire %}
+            <script type="text/javascript">(function(d, t, e, m){
+
+                    // Async Rating-Widget initialization.
+                    window.RW_Async_Init = function(){
+
+                        RW.init({
+                            huid: "356326",
+                            uid: "fcaed583fffba2df2735d606e93e2f2e",
+                            source: "website",
+                            options: {
+                                "advanced": {
+                                    "layout": {
+                                        "align": {
+                                            "hor": "center",
+                                            "ver": "top"
+                                        }
+                                    }
+                                },
+                                "size": "large",
+                                "style": "smiley",
+                                "isDummy": false
+                            }
+                        });
+                        RW.render();
+                    };
+                    // Append Rating-Widget JavaScript library.
+                    var rw, s = d.getElementsByTagName(e)[0], id = "rw-js",
+                            l = d.location, ck = "Y" + t.getFullYear() +
+                                    "M" + t.getMonth() + "D" + t.getDate(), p = l.protocol,
+                            f = ((l.search.indexOf("DBG=") > -1) ? "" : ".min"),
+                            a = ("https:" == p ? "secure." + m + "js/" : "js." + m);
+                    if (d.getElementById(id)) return;
+                    rw = d.createElement(e);
+                    rw.id = id; rw.async = true; rw.type = "text/javascript";
+                    rw.src = p + "//" + a + "external" + f + ".js?ck=" + ck;
+                    s.parentNode.insertBefore(rw, s);
+                }(document, new Date(), "script", "rating-widget.com/"));
+            </script>
+
+
+        {% endblock %}
+
+
+    </div>
+
+
+{% endblock %}

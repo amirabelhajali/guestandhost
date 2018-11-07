@@ -1,0 +1,29 @@
+{% extends 'MyAppUserBundle:experience:layout.html.twig' %}
+
+
+{% block body %}
+<script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('/highcharts.js') }}"></script>
+<script src="{{ asset('js/exporting.js') }}"></script>
+<script type="text/javascript"> {{ chart(chart) }} </script>
+        <div class="container-fluid pg-header"
+             style="background-image: url({{ asset('bundles/guestAndHost/assets/images/backgrounds/5.jpg') }});">
+            <div class="breadcrumbs text-left">
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Listings</a>
+                    </li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+            <div class="pg-header-content">
+                <h1 class="pg-title"> City Listing </h1>
+                <h4 class="pg-subtitle"> Understand why our listings are handy tools </h4>
+            </div>
+            <div class="pg-header-icon icon-city">
+
+            </div>
+        </div>
+        <br>
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>{# empty Twig template #}
+    {% endblock  %}

@@ -1,0 +1,9 @@
+{% block body %}
+    <script src="{{ asset('bundles/main/exporting.js') }}"></script>
+    <script src="{{ asset('bundles/main/highcharts.js') }}"></script>
+    <script src="{{ asset('bundles/main/jquery.min.js') }}"></script>
+    <script type="text/javascript">
+        {{ chart(chart) }}
+    </script>
+    <div id="linechart" ></div>
+    {% endblock  %}

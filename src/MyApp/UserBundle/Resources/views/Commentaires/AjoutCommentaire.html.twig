@@ -1,0 +1,241 @@
+{% extends 'MyAppUserBundle::layout.html.twig' %}
+
+
+{% block body %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/starrating/css/rating.css') }}" />
+    <script src="{{ asset('bundles/starrating/js/rating.js') }}"></script>
+
+    <div class="dashboard_blog menu-default hover-default sidebar-left">
+        <div id="header-nav-offset"></div>
+
+
+        <!-- END NAVBAR-->
+        <div class="site-wrap js-site-wrap">
+            <!-- BEGIN CENTER SECTION-->
+            <div class="center">
+                <div class="container">
+                    <div class="row">
+                        <header class="site__header">
+                            <h1 class="site__title site__title--center">Dashboard</h1>
+                        </header>
+                        <!-- BEGIN LISTING-->
+                        <div class="site site--dashboard" style="background:white">
+                            <header class="site__header">
+                                <h2 class="widget__title">Ajouter d'un commentaire </h2>
+                            </header>
+
+
+                            <div class="rw-ui-container"></div>
+
+
+                            <div class="site__main">
+                                {{ form_start(form, {'attr': {'class': 'form form--flex form--property-add js-form js-form-property'}}) }}
+                                <div class="row">
+                                    {{ form_widget(form.Ajouter,{'attr': {'class': 'form__submit'}}) }}
+
+
+                                </div>
+                                <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                    </br>
+                                    </br>
+                                    </div>
+                                </div>
+                                <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+
+                                    <div class="widget__content">
+                                        <div class="row">
+
+                                            {{ 4|rating }}
+                                            <div class="form-group form-group--col-12">
+                                                <label for="in-13" class="control-label">Commentaire</label>
+                                                {{ form_widget(form.commentaire,{'attr': {'class': 'form-control'}}) }}                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+                                <!--
+                                    <div class="widget js-widget widget--main widget--no-margin widget--no-border widget--collapse">
+                                        <div class="widget__header">
+                                            <h2 class="widget__title">Location</h2>
+                                            <h5 class="widget__headline">Google Maps is a desktop and mobile web mapping service application and technology provided by Google.</h5>
+                                        </div>
+                                        <div class="widget__content">
+                                            <div class="map map--location map--dashboard map--submit js-map-location-dashboard-submit">
+                                                <div class="map__header">
+                                                    <button type="button" class="btn--link js-remove-overlays">Delete selected shape</button>
+                                                </div>
+                                                <div class="map__block">
+                                                    <div class="row map__autocomplete">
+                                                        <div class="form-group form-group--autocomplete">
+                                                            <label for="autocomplete-dashboard submit" class="control-label">GPS Mapping</label>
+                                                            <input type="text" placeholder="" required="required" id="autocomplete-dashboard submit" class="form-control js-autocomplete"/>
+                                                        </div>
+                                                        <button type="button" class="map__geolocation js-geolocate">
+                                                            <svg>
+                                                                <use xlink:href="#icon-geolocation"></use>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="map__buttons">
+                                                        <button type="button" class="map__change-map js-map-btn">Address Map</button>
+                                                    </div>
+                                                    <div class="map__wrap">
+                                                        <div data-infobox-theme="white" class="map__view map__view--property-form js-map"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group form-group--coords">
+                                                        <label for="location-lat-dashboard submit" class="control-label">Lat</label>
+                                                        <input type="text" placeholder="" id="location-lat-dashboard submit" class="form-control js-location-coords"/>
+                                                    </div>
+                                                    <div class="form-group form-group--coords">
+                                                        <label for="location-lng-dashboard submit" class="control-label">Lng</label>
+                                                        <input type="text" placeholder="" id="location-lng-dashboard submit" class="form-control js-location-coords"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+        -->
+
+                            </div>
+
+
+
+
+
+
+                    <!-- END LISTING-->
+                    <!-- BEGIN SIDEBAR-->
+                    <div class="sidebar sidebar--dashboard">
+                        <div class="widget js-widget widget--sidebar-dashboard widget--collapsing">
+                            <div class="widget__header"><a class="widget__btn js-widget-btn widget__btn--toggle">Dashboard</a>
+                            </div>
+                            <div class="widget__content">
+                                <nav class="nav nav--sidebar">
+                                    <ul class="nav__list">
+                                        <li class="nav__item"><a href="{{ path('Recharger Compte')}}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-dashboard"></use>
+                                                </svg>
+                                                Profile</a></li>
+                                        <hr class="nav__separator">
+                                        <li class="nav__item"><a href="{{ path("afficherAnnonceUser") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-add-listing"></use>
+                                                </svg>
+                                                Mes Annonces</a></li>
+                                        <li class="nav__item">
+
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("AllMydemande_show") }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-news"></use>
+                                                </svg>
+                                                Mes Demandes</a></li>
+                                        <li class="nav__item"><a href="{{ path("Afficher Favories") }}"
+                                                                 class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-user-admin"></use>
+                                                </svg>
+                                                Mes Favories</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('experiences_affichage') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-clock"></use>
+                                                </svg>
+                                                Mes Experiences</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="{{ path("Mes Reservations") }}" class="nav__link active">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-listings"></use>
+                                                </svg>
+                                                Mes Reservations</a></li>
+                                        <hr class="nav__separator">
+
+                                        <li class="nav__item"><a href="{{ url('graphePie') }}" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-agents"></use>
+                                                </svg>
+                                                Statistiques</a></li>
+                                        <li class="nav__item"><a href="#" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-favorite-search"></use>
+                                                </svg>
+                                                Paramètres</a></li>
+                                        <li class="nav__item">
+                                            <hr class="nav__separator">
+                                        </li>
+                                        <li class="nav__item"><a href="http://localhost:9090/GnH/GuestAndHost/guestandhost/web/app_dev.php/logout" class="nav__link">
+                                                <svg class="nav__icon">
+                                                    <use xlink:href="#icon-financials"></use>
+                                                </svg>
+                                                Deconnèxion</a></li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END SIDEBAR-->
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+
+
+    {% block js %}
+        <script type="text/javascript">(function(d, t, e, m){
+
+                // Async Rating-Widget initialization.
+                window.RW_Async_Init = function(){
+
+                    RW.init({
+                        huid: "356326",
+                        uid: "fcaed583fffba2df2735d606e93e2f2e",
+                        source: "website",
+                        options: {
+                            "advanced": {
+                                "layout": {
+                                    "align": {
+                                        "hor": "center",
+                                        "ver": "top"
+                                    }
+                                }
+                            },
+                            "size": "large",
+                            "style": "oxygen1",
+                            "isDummy": false
+                        }
+                    });
+                    RW.render();
+                };
+                // Append Rating-Widget JavaScript library.
+                var rw, s = d.getElementsByTagName(e)[0], id = "rw-js",
+                        l = d.location, ck = "Y" + t.getFullYear() +
+                                "M" + t.getMonth() + "D" + t.getDate(), p = l.protocol,
+                        f = ((l.search.indexOf("DBG=") > -1) ? "" : ".min"),
+                        a = ("https:" == p ? "secure." + m + "js/" : "js." + m);
+                if (d.getElementById(id)) return;
+                rw = d.createElement(e);
+                rw.id = id; rw.async = true; rw.type = "text/javascript";
+                rw.src = p + "//" + a + "external" + f + ".js?ck=" + ck;
+                s.parentNode.insertBefore(rw, s);
+            }(document, new Date(), "script", "rating-widget.com/"));</script>
+
+
+    {% endblock %}
+
+{% endblock %}
+
+
